@@ -1,0 +1,177 @@
+<app-header></app-header>
+<div class="m-3">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Adoptante</h3>
+            <div class="row container" *ngIf="adopterDetail">
+              <div class="col-md-6 mt-4">
+                <b>Nombres: </b> {{adopterDetail.firstName + ' ' + adopterDetail.lastName}}
+              </div>
+              <div class="col-md-6 mt-4">
+                <b>Género: </b> {{adopterDetail.gender}}
+              </div>
+              <div class="col-md-6 mt-5">
+                <b>Número de Documento: </b> {{adopterDetail.documentNumber}}
+              </div>
+              <div class="col-md-6 mt-5" *ngIf="adopterDetail.birthDate">
+                <b>Fecha Nacimiento: </b> {{adopterDetail.birthDate}}
+              </div>
+              <div class="col-md-6 mt-5" *ngIf="adopterDetail.age">
+                <b>Edad: </b> {{adopterDetail.age}}
+              </div>
+              <div class="col-md-6 mt-5" *ngIf="adopterDetail.departamento">
+                <b>Departamento: </b> {{adopterDetail.departamento}}
+              </div>
+              <div class="col-md-6 mt-5" *ngIf="adopterDetail.provincia">
+                <b>Provincia: </b> {{adopterDetail.provincia}}
+              </div>
+              <div class="col-md-6 mt-5" *ngIf="adopterDetail.distrito">
+                <b>Distrito: </b> {{adopterDetail.distrito}}
+              </div>
+              <div class="col-md-6 mt-5" *ngIf="adopterDetail.commentaryCreationDate">
+                <b>Fecha Registrado </b> {{adopterDetail.commentaryCreationDate}}
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Organización Registrante</h3>
+            <div *ngIf="adopterDetail" class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-3 mt-2 justify-content-right">
+                <p-image
+                src="https://scontent.flim12-1.fna.fbcdn.net/v/t31.18172-8/12916761_620891148064325_2150742357506774774_o.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGpqijSC8Nw8SABxq_mPJedvixYA4IYMlG-LFgDghgyUejbslt4W1ymZeIUSIGnA-8&_nc_ohc=T5g8U5i3DUIAX9IQZdr&_nc_ht=scontent.flim12-1.fna&oh=b697c474f81269f1b9ff0f23839234c3&oe=61D42106"
+                alt="Image" width="150">
+              </p-image>
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <h4>{{adopterDetail.organizationName}} </h4>
+            </div>
+            <div class="col-md-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="container mt-5">
+        <p-table #dt [value]="adopter" [rows]="10" [paginator]="true"
+          [globalFilterFields]="['action','name','petOrganization','severity']" responsiveLayout="scroll"
+          [rowHover]="true" dataKey="id"
+          currentPageReportTemplate="Mostrando {first} de {last} de un total de {totalRecords} registros"
+          [showCurrentPageReport]="true">
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <h5 class="p-m-0">Comentarios</h5>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="dni">N°</th>
+              <th pSortableColumn="name">Logo</th>
+              <th pSortableColumn="name">Organización <p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="petOrganization">Fecha Incidente<p-sortIcon field="petOrganization"></p-sortIcon>
+              </th>
+              <th pSortableColumn="severity">Severidad <p-sortIcon field="severity"></p-sortIcon>
+              </th>
+              <th pSortableColumn="action">Comentarios </th>
+              <th pSortableColumn="action">Evidencia</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-adopterCommentary let-rowIndex="rowIndex">
+            <tr>
+              <td>{{rowIndex+1}}</td>
+              <td>
+                <p-image
+                  src="https://scontent.flim12-1.fna.fbcdn.net/v/t31.18172-8/12916761_620891148064325_2150742357506774774_o.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGpqijSC8Nw8SABxq_mPJedvixYA4IYMlG-LFgDghgyUejbslt4W1ymZeIUSIGnA-8&_nc_ohc=T5g8U5i3DUIAX9IQZdr&_nc_ht=scontent.flim12-1.fna&oh=b697c474f81269f1b9ff0f23839234c3&oe=61D42106"
+                  alt="Image" width="250">
+                </p-image>
+              </td>
+              <td>{{ adopterCommentary.organizationName}}</td>
+              <td>{{adopterCommentary.issueDate}}</td>
+              <!-- <td><img [src]="'assets/showcase/images/demo/adopterCommentary/' + adopterCommentary.image" [alt]="adopterCommentary.name" width="100" class="p-shadow-4" /></td> -->
+              <td>
+                <p-tag styleClass="p-mr-2" severity="success" value={{adopterCommentary.severity}} [rounded]="true"
+                  *ngIf="adopterCommentary.severity == 'BUENO'"></p-tag>
+                <p-tag styleClass="p-mr-2" severity="warning" value={{adopterCommentary.severity}} [rounded]="true"
+                  *ngIf="adopterCommentary.severity == 'REGULAR'"></p-tag>
+                <p-tag styleClass="p-mr-2" severity="danger" value={{adopterCommentary.severity}} [rounded]="true"
+                  *ngIf="adopterCommentary.severity == 'PESIMO'"></p-tag>
+              </td>
+              <td>
+                <button pButton pRipple type="button" label="Ver" class="p-button-outlined p-button-rounded p-button-Info"></button>
+              </td>
+              <td>
+                <button pButton pRipple type="button" label="Ver" class="p-button-outlined p-button-rounded p-button-help"></button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              Existe(n) {{adopterCommentary ? adopterCommentary.length : 0}} comentario(s) asignado(s) a este adoptante.
+            </div>
+          </ng-template>
+        </p-table>
+      </div>
+  
+      <!-- <p-table [value]="adopterCommentary" sortField="firstName" sortMode="single" [scrollable]="true"
+        scrollHeight="400px" rowGroupMode="subheader" groupRowsBy="firstName" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="min-width:200px">Nombres</th>
+            <th style="min-width:200px">Organizacion</th>
+            <th style="min-width:200px">Genero</th>
+            <th style="min-width:200px">Severidad</th>
+            <th style="min-width:200px">Accion</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="groupheader" let-adopterCommentary>
+          <tr pRowGroupHeader>
+            <td colspan="5">
+              <img [alt]="adopterCommentary.firstName"
+                src="https://www.notebookcheck.org/fileadmin/Notebooks/News/_nc3/Crypto_News_Shiba_Inu_Coin_Ethereum_Hack.png"
+                width="32" style="vertical-align: middle" />
+              <span class="p-text-bold p-ml-2">{{adopterCommentary.organizationName}}</span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="groupfooter" let-adopterCommentary>
+          <tr class="p-rowgroup-footer">
+            <td style="min-width: 80%">
+              <div style="text-align: right; width: 100%">Comentarios </div>
+            </td>
+            <td style="width: 20%">1000000000</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-adopterCommentary let-rowIndex="rowIndex">
+          <tr>
+            <td style="min-width:200px">
+              {{adopterCommentary.documentNumber}}
+            </td>
+            <td style="min-width:200px">
+              <span class="image-text">{{adopterCommentary.departamento}} / {{adopterCommentary.provincia}} /
+                {{adopterCommentary.distrito}}</span>
+            </td>
+            <td style="min-width:200px">
+              {{adopterCommentary.gender}}
+            </td>
+            <td style="min-width:200px">
+              <span
+                [class]="'adopterCommentary-badge status-' + adopterCommentary.severity">{{adopterCommentary.severity}}</span>
+            </td>
+            <td style="min-width:200px">
+              {{adopterCommentary.date}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table> -->
+  
+    </div>
+  </div>

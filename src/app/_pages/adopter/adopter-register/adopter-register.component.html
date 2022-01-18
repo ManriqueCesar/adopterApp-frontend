@@ -1,0 +1,191 @@
+<app-header></app-header>
+
+<div class="col-md-12 mb-3">
+    <p-breadcrumb [model]="breadcumb" [home]="home"></p-breadcrumb>
+</div>
+
+<div class="stepsdemo-content mt-2">
+    <p-card>
+        <ng-template pTemplate="title">
+            <div class="col-md-12">
+                <div class="mb-5" style="text-align: center;">
+                    <h3>Registro de adoptante</h3>
+                </div>
+                <p-steps [model]="items" [(activeIndex)]="activeIndex"></p-steps>
+            </div>
+
+        </ng-template>
+        <ng-template pTemplate="content">
+            <form [formGroup]="adopterForm" (ngSubmit)="register()">
+                <div *ngIf="activeIndex==0" class="mt-3">
+                    <div>
+                        <div class="p-fluid p-grid row">
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText formControlName="firstName" minlength="3"
+                                        (change)="enableButton()">
+                                    <label for="inputtext">Nombres (*)</label>
+                                </span>
+                                <small class="p-error" *ngIf="f['firstName'].touched && f['firstName'].errors">Debe
+                                    contener al menos 3 caracteres.</small>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText formControlName="lastName" (change)="enableButton()">
+                                    <label for="inputtext">Apellidos (*)</label>
+                                </span>
+                                <small class="p-error" *ngIf="f['lastName'].touched && f['lastName'].errors">Debe
+                                    contener al menos 3 caracteres.</small>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-inputMask inputId="inputmask" mask="99/99/9999" formControlName="birthDate" >
+                                    </p-inputMask>
+                                    <label for="inputmask">Fecha Nacimiento <small>(dd/mm/aaaa)</small></label>
+                                </span>
+                            </div>
+
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-dropdown [options]="genderList" [(ngModel)]="genderValue"
+                                        optionLabel="description" optionValue="id" inputId="dropdown"
+                                        [ngModelOptions]="{standalone: true}" [style]="{'minWidth':'30%'}">
+                                    </p-dropdown>
+                                    <label for="dropdown">Género</label>
+                                </span>
+                            </div>
+
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-dropdown [options]="documentList" [(ngModel)]="documentValue"
+                                        optionLabel="description" optionValue="id" inputId="dropdown"
+                                        [ngModelOptions]="{standalone: true}" [style]="{'minWidth':'30%'}">
+                                    </p-dropdown>
+                                    <label for="dropdown">Tipo Documento</label>
+                                </span>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText formControlName="documentNumber" minlength="8"
+                                        (change)="enableButton()">
+                                    <label for="inputtext">Documento (*)</label>
+                                    <small class="p-error"
+                                        *ngIf="documentValue == 1 && f['documentNumber'].errors && f['documentNumber'].touched ">Debe
+                                        contener al menos 8 caracteres.</small>
+                                </span>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-inputNumber inputId="inputnumber" formControlName="phone"></p-inputNumber>
+                                    <label for="inputnumber">Celular</label>
+                                </span>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-dropdown [options]="departmentList" [(ngModel)]="departmentValue"
+                                        optionLabel="department" optionValue="id" inputId="dropdown"
+                                        [ngModelOptions]="{standalone: true}" [style]="{'minWidth':'30%'}"
+                                        (ngModelChange)="initProvincia($event)">
+                                    </p-dropdown>
+                                    <label for="dropdown">Departamento</label>
+                                </span>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-dropdown [options]="provinceList" [(ngModel)]="provinceValue"
+                                        optionLabel="province" optionValue="id" inputId="dropdown"
+                                        [ngModelOptions]="{standalone: true}" [style]="{'minWidth':'30%'}"
+                                        (ngModelChange)="initDistrito($event)">
+                                    </p-dropdown>
+                                    <label for="dropdown">Provincia</label>
+                                </span>
+                            </div>
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-dropdown [options]="districtList" [(ngModel)]="districtValue"
+                                        optionLabel="district" optionValue="id" inputId="dropdown"
+                                        [ngModelOptions]="{standalone: true}" [style]="{'minWidth':'30%'}">
+                                    </p-dropdown>
+                                    <label for="dropdown">Distrito</label>
+                                </span>
+                            </div>
+                            <small>(*) : Campos obligatorios</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="activeIndex==1">
+                    <div>
+                        <div class="p-fluid p-grid row">
+                            <div class="col-md-6 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <p-dropdown [options]="severityList" [(ngModel)]="severityValue"
+                                        [ngModelOptions]="{standalone: true}" optionLabel="description" optionValue="id"
+                                        inputId="dropdown" [style]="{'minWidth':'30%'}">
+                                    </p-dropdown>
+                                    <label for="dropdown">Severidad</label>
+                                </span>
+                            </div>
+                            <div class="col-md-4 p-md-4 mt-4" *ngIf="severityValue > 1">
+                                <span class="p-float-label">
+                                    <p-calendar  dateFormat="mm/dd/yy" inputId="dateformat" formControlName="issueDate"></p-calendar>
+                                    <label for="inputmask">Fecha de Incidente</label>
+                                </span>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4 mt-4">
+                                <span class="p-float-label">
+                                    <textarea inputId="textarea" rows="3" style="resize: none;" cols="30" pInputTextarea
+                                        formControlName="comments"></textarea>
+                                    <label for="textarea">Comentarios</label>
+                                </span>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4 mt-4" *ngIf="severityValue > 1">
+                                <span class="p-float-label">
+                                    <textarea inputId="textarea" rows="3" style="resize: none;" cols="30" pInputTextarea
+                                        formControlName="evidence"></textarea>
+                                    <label for="textarea">Evidencia</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="activeIndex==2">
+                    <div class="p-fluid p-grid row">
+                        <div class="col-md-12 p-md-4">
+                            <h5>Organización Registrante: </h5>
+                            <div style="text-align: center;" class="mt-2">
+                                <p>{{organizationName}} </p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="p-fluid p-grid row">
+                        <div class="p-field-checkbox col-md-12 p-md-4">
+                            <p-checkbox [binary]="true" [(ngModel)]="checked" [ngModelOptions]="{standalone: true}">
+                            </p-checkbox>
+                            <label for="binary">  Declaro que la información brindada sobre el adoptante es
+                                verídica.</label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p-button label="Registrar" type="submit" [disabled]="!checked"></p-button>
+                    </div>
+                </div>
+              
+            </form>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <div class="p-grid p-nogutter p-justify-between">
+                <p-button label="Regresar" icon="pi pi-angle-left" (click)="previous(activeIndex)"
+                    *ngIf="activeIndex > 0">
+                </p-button>
+                <p-button label="Siguiente" icon="pi pi-angle-right" iconPos="right" (click)="next(activeIndex)"
+                    *ngIf="activeIndex < 2" [disabled]="!enabledNext">
+
+                </p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

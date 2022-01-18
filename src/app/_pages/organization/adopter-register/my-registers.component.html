@@ -1,0 +1,45 @@
+<div class="col-md-12 ml-3">
+    <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+  </div>
+
+<div class="m-5">
+    <h3> Mis Registros </h3>
+
+    <div class="card mt-3">
+     <p-table [value]="adopterList" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>N°</th>
+                <th>Nombres</th>
+                <th>Documento</th>
+                <th>Fecha registro</th>
+                <th>Severidad</th>
+                <th>Direccion</th>
+                <th>Detalle</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-adopterList let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex+1}}</td>
+                <td>{{adopterList.lastName}} {{adopterList.firstName}}</td>
+                <td>{{adopterList.documentNumber}}</td>
+                <td>{{adopterList.creationDate}}</td>
+                <td>
+                    <p-tag styleClass="p-mr-2" severity="success" value = {{adopterList.severity}} [rounded]="true" *ngIf="adopterList.severity == 'BUENO'"></p-tag>
+                    <p-tag styleClass="p-mr-2" severity="warning" value = {{adopterList.severity}} [rounded]="true" *ngIf="adopterList.severity == 'REGULAR'"></p-tag>
+                    <p-tag styleClass="p-mr-2" severity="danger" value = {{adopterList.severity}} [rounded]="true" *ngIf="adopterList.severity == 'PESIMO'"></p-tag>
+                </td>
+                <td>{{adopterList.departamento}} / {{adopterList.provincia}}</td>
+                <td>
+                    <button pButton pRipple label="Ver" icon="pi pi-search" class="p-button-success p-mr-2" (click)="navigate(adopterList.documentNumber)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    </div>
+  
+
+</div>
+
+
