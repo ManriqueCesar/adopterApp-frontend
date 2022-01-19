@@ -68,9 +68,11 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token',response.token);
           localStorage.setItem('currentUser', JSON.stringify({ nombre: response.usuario.usuario }));
           localStorage.setItem('currentUser', JSON.stringify({ idOrganization: response.usuario.idOrganization }));
-         // localStorage.setItem('currentUser', JSON.stringify({ idOrganization: response.usuario.habilitado }));
+          localStorage.setItem('organizationName',response.usuario.organizationName);
+          localStorage.setItem('idOrganization',response.usuario.idOrganization );
           this.authService.currentUserSubject.next(new Usuario({ nombre: response.usuario.usuario }));
-         // this.router.navigate([this.returnUrl]); 
+          //this.router.navigate([this.returnUrl]); 
+          this.router.navigate(['organizacion']);
           break;
         default:
           Swal.fire({

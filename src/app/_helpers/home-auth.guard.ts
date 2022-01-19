@@ -14,7 +14,7 @@ export class HomeAuthGuard implements CanActivate{
         
         if (!currentUser) {
             // not logged in so redirect to login page with the return url
-            //this.router.navigate(['login']);
+            this.router.navigate(['login']);
             return false;
         } else {
            // this.router.navigate(['organizacion']);

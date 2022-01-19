@@ -48,7 +48,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdopterComponent } from './_pages/adopter/adopter.component';
 import { SearchComponent } from './_pages/organization/search/search-component';
 import { appRoutingModule } from './app.routing';
-import { MyRegisters } from './_pages/organization/adopter-register/my-registers-component';
+import { MyRegistersComponent } from './_pages/organization/myRegisters/my-registers-component';
 import { DatePipe } from '@angular/common';
 
 @NgModule({
@@ -65,7 +65,7 @@ import { DatePipe } from '@angular/common';
     NavbaComponent,
     SidebarComponent,
     SpinnerComponent,
-    MyRegisters
+    MyRegistersComponent
   ],
   imports: [
    BrowserModule,

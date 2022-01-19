@@ -1,10 +1,10 @@
-<div class="m-3">
+<div class="ml-3 mb-3 mr-1">
     <p-menubar [model]="items">
         <ng-template pTemplate="start">
-            <img href= "../../../assets/images/kimsuki.png" height="50" class="p-mr-2" style="margin-left: 5rem ; margin-right: 2rem;">
+            <img src= "../../../assets/images/logo.png" height="50" class="p-mr-2" style="margin-left: 5rem ; margin-right: 2rem;">
         </ng-template>
         <ng-template pTemplate="end">
-            <button pButton pRipple type="button" icon="pi pi-sign-out" class="p-button-rounded p-button-text" label="Salir"></button>
+            <button pButton pRipple type="button" icon="pi pi-sign-out" class="p-button-rounded p-button-text" label="Salir" (click)="salir()"></button>
         </ng-template>
     </p-menubar>
     

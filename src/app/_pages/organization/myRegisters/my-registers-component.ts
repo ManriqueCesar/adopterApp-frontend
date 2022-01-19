@@ -8,14 +8,14 @@ import { OrganizationService } from 'src/app/_services/organization.service';
   templateUrl: './my-registers.component.html',
   styleUrls: ['./adopter-register.component.css']
 })
-export class MyRegisters implements OnInit {
+export class MyRegistersComponent implements OnInit {
 
  
   adopterList: any;
   adopter: Adopter;
   documentNumber: String;
   adopterOrganization: {};
-  idOrganization: number = 1;
+  idOrganization: any;
   response: any;
   responseCode: number;
   adopterForm: FormGroup;
@@ -29,15 +29,16 @@ export class MyRegisters implements OnInit {
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.idOrganization = localStorage.getItem('idOrganization');
     this.initAdopterForm();
     this.initAdopterList();
 
     this.items = [
-      {label:'Organización'},
+      {label:'Organización', routerLink: '/organizacion'},
       {label:'Mis registros'}
    ];
   
-    this.home = {icon: 'pi pi-home', routerLink: '/'}
+    this.home = {icon: 'pi pi-home', routerLink: '/Organizacion'}
 
   }
 

@@ -18,14 +18,11 @@ export class AdopterService {
   } 
 
   getByDocument(docNumber: string){
-    var object = {
-      "documentNumber" : docNumber
-    };
-    return this.http.post(environment.apiRoute + `adopter/detail`, object)
+    return this.http.get<any>(environment.apiRoute + `adopter/detail/${docNumber}`);
   }
 
   getCommentary(docNumber: string){
-    return this.http.get(environment.apiRoute + `adopter/comments/${docNumber}`);
+    return this.http.get<any>(environment.apiRoute + `adopter/comments/${docNumber}`);
   }
 
   list(){

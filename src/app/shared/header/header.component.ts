@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -13,7 +14,9 @@ export class HeaderComponent implements OnInit {
   activeItem: MenuItem;
 
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.items = [
@@ -34,6 +37,10 @@ export class HeaderComponent implements OnInit {
         routerLink: '/registro'
       },
       {
+        label: 'Mis Registros', icon: 'pi pi-fw pi-pencil',
+        routerLink: '/organizacion/MisRegistros'
+      },
+      {
         label: 'Sobre Kimsuki', icon: ' pi pi-fw pi-heart',
         routerLink: '/about',
         
@@ -41,6 +48,11 @@ export class HeaderComponent implements OnInit {
   ];
   
   this.activeItem = this.items[0];
+  }
+
+  salir(){
+    this.router.navigate(['login'])
+    localStorage.clear();
   }
 
 }

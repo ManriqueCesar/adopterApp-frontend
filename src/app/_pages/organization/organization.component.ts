@@ -28,8 +28,7 @@ export class OrganizationComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationService,
-    private authenticationService: AuthenticationService,
-    private datepipe: DatePipe
+    private authenticationService: AuthenticationService
   ) { 
 
     this.title = "Organizacion - Perfil"
@@ -39,7 +38,7 @@ export class OrganizationComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.idOrganization = this.currentUser.idOrganization;
+    this.idOrganization = localStorage.getItem('idOrganization');
     this.findById();
     //this.id=localStorage.getItem('idOrganization');
 

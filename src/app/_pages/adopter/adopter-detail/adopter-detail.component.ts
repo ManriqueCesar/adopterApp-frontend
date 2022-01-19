@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { AdopterService } from 'src/app/_services/adopter.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class AdopterDetailComponent implements OnInit {
   adopter : any;
   adopterDetail: any;
   adopterCommentary: any;
-  temp: any;
+  breadcumb: MenuItem[];
+  home: MenuItem;
 
   constructor(
     private adopterService: AdopterService
@@ -22,22 +24,30 @@ export class AdopterDetailComponent implements OnInit {
     this.docNumber = localStorage.getItem('adopterDoc');
     this.getAdopterDetail();
     this.getAdopterComments();
+
+    this.breadcumb = [
+      {label:'Organizacion', routerLink: '/organizacion'},
+      {label:'Mis Registros', routerLink: '/organizacion/MisRegistros'},
+      {label:'Detalle'},
+   ];
+
+   this.home = {icon: 'pi pi-home', routerLink: '/organizacion'}
+
   }
 
   getAdopterDetail(){
     
     this.adopterService.getByDocument(this.docNumber).subscribe(data => {
-      this.temp = data;
-      this.adopter = this.temp.adopter;
-      this.adopterDetail = this.adopter[0];
+      this.adopterDetail = data.adopter[0];
+      console.log(this.adopterDetail)
+      console.log(data)
     })
   }
 
   getAdopterComments(){
     this.adopterService.getCommentary(this.docNumber).subscribe(data => {
-      this.temp = data;
       this.adopterCommentary = data;
-      console.log(data);
+      console.log(this.adopterCommentary);
     })
   
   }

@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit {
     adopter: Adopter;
     documentNumber: String;
     adopterOrganization: {};
-    idOrganization: number = 1;
+    idOrganization: any;
     response: any;
     responseCode: number;
     adopterForm: FormGroup;
@@ -34,6 +34,7 @@ export class SearchComponent implements OnInit {
       private router: Router) { }
   
     ngOnInit(): void {
+      this.idOrganization = localStorage.getItem('idOrganization');
       this.initAdopterForm();
   
       this.items = [
@@ -79,7 +80,7 @@ export class SearchComponent implements OnInit {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             this.adopterOrganization = {
-              'idOrganization': 1,
+              'idOrganization': this.idOrganization,
               'documentNumber': this.adopterForm.value.documentNumber
             }
             this.organizationService.search(this.adopterOrganization).subscribe(res => {

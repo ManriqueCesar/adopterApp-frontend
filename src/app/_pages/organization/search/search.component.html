@@ -28,8 +28,6 @@
         </div>
     </div>
 
-    
-    
     <div class="mt-5" *ngIf="adopterList">
         <p-table #dt [value]="adopterList" [rows]="10"  [globalFilterFields]="['action','name','petOrganization','severity']" responsiveLayout="scroll"
         [rowHover]="true" dataKey="id"
@@ -55,7 +53,7 @@
                   <td>{{adopterList.documentNumber}}</td>
                   <td>{{adopterList.firstName +' '+ adopterList.lastName}}</td>
                   <!-- <td><img [src]="'assets/showcase/images/demo/adopterList/' + adopterList.image" [alt]="adopterList.name" width="100" class="p-shadow-4" /></td> -->
-                  <td>{{adopterList.gender}}</td>
+                  <td>{{adopterList.gender?adopterList.gender : 'No especificado' }}</td>
                   <td>{{adopterList.organizationName}}</td>
                   <!-- <td><p-rating [ngModel]="adopterList.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
                   <td>

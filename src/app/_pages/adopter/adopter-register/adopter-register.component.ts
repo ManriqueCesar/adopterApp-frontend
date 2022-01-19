@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { AdopterService } from 'src/app/_services/adopter.service';
 import { DocumentService } from 'src/app/_services/document.service';
@@ -38,7 +39,7 @@ export class AdopterRegisterComponent implements OnInit {
   districtList: any;
   districtValue: any;
 
-  organizationName: string = 'AdopterApp-';
+  organizationName: string;
 
   submitted: boolean;
   adopterForm: FormGroup;
@@ -54,10 +55,11 @@ export class AdopterRegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private adopterService : AdopterService,
     private regionService : RegionService,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private router : Router
   ) { 
-    //this.idOrganization = localStorage.getItem('idOrganization'); pendiente
-    this.idOrganization = 1;
+    this.idOrganization = localStorage.getItem('idOrganization');
+    this.organizationName = localStorage.getItem('organizationName');
   }
 
 
@@ -70,6 +72,7 @@ export class AdopterRegisterComponent implements OnInit {
     this.initDepartment();
 
     this.initAdopterForm();
+    
     this.departmentList = [{
       name : "LIMA",
       id: 15
@@ -77,11 +80,11 @@ export class AdopterRegisterComponent implements OnInit {
 
     
     this.breadcumb = [
-      {label:'Adoptante'},
-      {label:'Registro'}
+      {label:'Organizacion', routerLink: '/organizacion'},
+      {label:'Registro Adoptante'}
    ];
   
-    this.home = {icon: 'pi pi-home', routerLink: '/'}
+    this.home = {icon: 'pi pi-home', routerLink: '/organizacion'}
 
   }
 
@@ -145,8 +148,6 @@ export class AdopterRegisterComponent implements OnInit {
       "description": "FEMENINO"
     }];
   }
-
-
   
   initDepartment(){
     this.departmentList = {};
@@ -165,8 +166,6 @@ export class AdopterRegisterComponent implements OnInit {
     this.regionService.listDistrict(idProvincia).subscribe(data => this.districtList = data);
     this.districtValue = { id : 15 }
   }
-
-
 
   register() {
 
@@ -188,10 +187,8 @@ export class AdopterRegisterComponent implements OnInit {
       idDistrito : this.districtValue,
       idDepartamento : this.departmentValue,
       idProvincia : this.provinceValue,
-      
     }
-    console.log(this.adopterForm);
-    console.log(this.adopter);
+
 
     if(this.adopterForm.status){
     
@@ -214,7 +211,11 @@ export class AdopterRegisterComponent implements OnInit {
               title: message,
               showConfirmButton: false,
               timer: 3000});
+              setTimeout(() => {
+                this.router.navigate(['Mis'])
+              }, 3500);
             break;
+  
           case 500: 
             Swal.fire({
               icon: 'error',
@@ -255,10 +256,9 @@ export class AdopterRegisterComponent implements OnInit {
     if(this.enabledNext){
       this.activeIndex = index + 1;
     }
-   
   }
+
   previous(index: number) {
     this.activeIndex = index - 1;
   }
-
 }

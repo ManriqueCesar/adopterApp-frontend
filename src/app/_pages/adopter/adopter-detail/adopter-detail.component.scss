@@ -1,5 +1,6 @@
 :host ::ng-deep .p-rowgroup-footer td {
     font-weight: 700;
+
 }
 
 :host ::ng-deep .p-rowgroup-header {
@@ -11,4 +12,12 @@
         vertical-align: middle;
         margin-right: .25rem;
     }
+}
+
+:host 
+    ::ng-deep .p-image {
+        img{
+            border-radius: 50%;
+        }
+        
 }
